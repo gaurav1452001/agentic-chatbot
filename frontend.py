@@ -1,6 +1,6 @@
 import streamlit as st
 
-st.set_page_config(page_title="Groq Chatbot", page_icon=":robot_face:", layout="wide")
+st.set_page_config(page_title="Groq Chatbot", page_icon=":robot_face:", layout="centered")
 st.title("AI Chatbot")
 st.write("Chat using Groq AI and Tavily.")
 system_prompt = st.text_area("System Prompt",height=70 ,placeholder="Enter your system prompt here...")
@@ -16,6 +16,24 @@ allow_search=st.checkbox("Allow Search")
 
 user_query = st.text_area("Chat", height=200, placeholder="Ask  Anything...")
 
+API_URL="http://127.0.0.1:8000/chat"
+
 if st.button("Ask AI"):
     if user_query.strip():
-        response="Hi"
+        import requests
+        payload={
+            "model_name": select_model,
+            "model_provider": provider,
+            "system_prompt": system_prompt,
+            "messages": [user_query],
+            "allow_search": allow_search
+        }
+        
+        response=requests.post(API_URL, json=payload)
+        if response.status_code == 200:
+            response_data=response.json()
+            if "error" in response_data:
+                st.error(response_data["error"])
+            else:
+                st.subheader("Agent Response")
+                st.markdown(f"Answer: {response_data}")
