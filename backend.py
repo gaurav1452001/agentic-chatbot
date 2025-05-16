@@ -7,3 +7,27 @@ class RequestState(BaseModel):
     messages:List[str]
     allow_search: bool
     
+from fastapi import FastAPI
+from ai_agent import get_ai_response
+
+ALLOWED_MODELS=["llama-3.3-70b-versatile","mixtral-8x7b-32768","llama3-70b-8192"]
+
+app=FastAPI(title="AI Agent")
+
+@app.post("/chat")
+
+def chat_endpoint(request: RequestState):
+    """
+    Endpoint to handle chat requests.
+    """
+    if request.model_name not in ALLOWED_MODELS:
+        return {"error": "Model not allowed"}
+    
+    llm_id=request.model_name
+    query=request.messages
+    allow_search=request.allow_search
+    system_prompt=request.system_prompt
+    provider=request.model_provider
+    
+    response=get_ai_response(llm_id,query,allow_search,system_prompt,provider)
+    
