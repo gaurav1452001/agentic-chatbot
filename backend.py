@@ -15,7 +15,6 @@ ALLOWED_MODELS=["llama-3.3-70b-versatile","mixtral-8x7b-32768","llama3-70b-8192"
 app=FastAPI(title="AI Agent")
 
 @app.post("/chat")
-
 def chat_endpoint(request: RequestState):
     """
     Endpoint to handle chat requests.
@@ -30,4 +29,9 @@ def chat_endpoint(request: RequestState):
     provider=request.model_provider
     
     response=get_ai_response(llm_id,query,allow_search,system_prompt,provider)
+    return response
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="127.0.0.1", port=8000)
     
