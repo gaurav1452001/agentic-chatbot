@@ -10,7 +10,7 @@ class RequestState(BaseModel):
 from fastapi import FastAPI
 from ai_agent import get_ai_response
 
-ALLOWED_MODELS=["llama-3.3-70b-versatile","mixtral-8x7b-32768","llama3-70b-8192"]
+ALLOWED_MODELS=["llama-3.3-70b-versatile","llama-3.1-8b-instant","llama3-70b-8192"]
 
 app=FastAPI(title="AI Agent")
 
