@@ -16,7 +16,8 @@ allow_search=st.checkbox("Allow Search")
 
 user_query = st.text_area("Chat", height=200, placeholder="Ask  Anything...")
 
-API_URL="https://agentic-chatbot-iqo9.onrender.com/chat"
+API_URL="https://agentic-chatbot-6n5r.onrender.com/chat"
+
 
 if st.button("Ask AI"):
     if user_query.strip():
